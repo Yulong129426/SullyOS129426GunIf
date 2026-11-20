@@ -1,6 +1,13 @@
 [build]
+  command = "bash scripts/netlify-build.sh"
   functions = "netlify/functions"
   publish = "dist"
+
+# Pinned here so a malformed PNPM_FLAGS value in the site settings can't break
+# `pnpm install` (a stray non-flag token turns it into `pnpm add`, which then
+# rejects the lockfile flag). Values in this file override dashboard values for builds.
+[build.environment]
+  PNPM_FLAGS = "--no-frozen-lockfile"
 
 [functions]
   node_bundler = "esbuild"
